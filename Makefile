@@ -25,7 +25,7 @@ restart: ##@running Restart all or c=<name> containers
 
 ### shell ###
 db: ##@console Database console
-	@$(DC_EXEC) db mysql -u $(DB_USER) -p$(DB_PASS) $(DB_DATABASE)
+	@$(DC_EXEC) db psql $(DB_NAME) -U $(DB_USER)
 
 bash: bash-fpm ##@console Alias bash-fpm
 
