@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Make;
 use App\Entity\Model;
+use App\Entity\SearchLog;
 use App\Entity\VehicleType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -50,7 +52,7 @@ class MainController extends AbstractController
     /**
      * @Route("/models/{type}/{makeCode}", name="model_list_by_vehicle_type_and_make_code")
      */
-    public function modelListByVehicleTypeAndMakeCode(string $type, string $makeCode): JsonResponse
+    public function modelListByVehicleTypeAndMakeCode(string $type, string $makeCode, Request $request): JsonResponse
     {
         /** @var VehicleType $vehicleType */
         $vehicleType = $this->getDoctrine()
@@ -66,6 +68,18 @@ class MainController extends AbstractController
         $models = $this->getDoctrine()
             ->getRepository(Model::class)
             ->findBy(['type' => $vehicleType, 'make' => $make], ['code' => 'ASC']);
+
+        $log = (new SearchLog())
+            ->setVehicleTypeCode($type)
+            ->setMakeCode($makeCode)
+            ->setNumberModels(count($models))
+            ->setRequestTime((new \DateTime())->format('Y-m-d H:i:s'))
+            ->setIp($request->getClientIp())
+            ->setUserAgent($request->headers->get('User-Agent'));
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($log);
+        $em->flush();
 
         $func = fn(Model $model): array => [
             'code' => $model->getCode(),

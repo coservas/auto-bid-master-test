@@ -17,14 +17,14 @@ class SearchLog
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\VehicleType")
+     * @ORM\Column(type="string", length=255)
      */
-    private $vehicle;
+    private $vehicleTypeCode;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Make")
+     * @ORM\Column(type="string", length=255)
      */
-    private $make;
+    private $makeCode;
 
     /**
      * @ORM\Column(type="integer")
@@ -49,30 +49,6 @@ class SearchLog
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getVehicle(): ?VehicleType
-    {
-        return $this->vehicle;
-    }
-
-    public function setVehicle(?VehicleType $vehicle): self
-    {
-        $this->vehicle = $vehicle;
-
-        return $this;
-    }
-
-    public function getMake(): ?Make
-    {
-        return $this->make;
-    }
-
-    public function setMake(?Make $make): self
-    {
-        $this->make = $make;
-
-        return $this;
     }
 
     public function getNumberModels(): ?int
@@ -120,6 +96,42 @@ class SearchLog
     {
         $this->userAgent = $userAgent;
 
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVehicleTypeCode()
+    {
+        return $this->vehicleTypeCode;
+    }
+
+    /**
+     * @param mixed $vehicleTypeCode
+     * @return SearchLog
+     */
+    public function setVehicleTypeCode($vehicleTypeCode)
+    {
+        $this->vehicleTypeCode = $vehicleTypeCode;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMakeCode()
+    {
+        return $this->makeCode;
+    }
+
+    /**
+     * @param mixed $makeCode
+     * @return SearchLog
+     */
+    public function setMakeCode($makeCode)
+    {
+        $this->makeCode = $makeCode;
         return $this;
     }
 }
