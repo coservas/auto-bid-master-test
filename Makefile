@@ -11,6 +11,8 @@ clean: confirm ##@data Stop containers and removing containers, networks, volume
 
 
 ### running ###
+install: build start composer-install create-db-schema load-fixtures ##@running Install application
+
 start: ##@running Start all or c=<name> containers in background
 	@$(DC) up -d $(c)
 
@@ -49,3 +51,17 @@ status: ##@info Show status of containers
 logs: ##@info Show all or c=<name> logs of containers
 	@$(DC) logs -f $(c)
 ### information ###
+
+### install ###
+composer-install: #@install Install composer packages
+	@$(DC_EXEC) fpm composer install --no-interaction
+
+create-db-schema: #@install Create DB scheme
+	@$(DC_EXEC) fpm bin/console doctrine:schema:create --no-interaction
+
+update-db-schema: #@install Update DB scheme
+	@$(DC_EXEC) fpm bin/console doctrine:schema:update --force --no-interaction
+
+load-fixtures: #@install Load DB fixtures
+	@$(DC_EXEC) fpm bin/console doctrine:fixtures:load --no-interaction
+### install ###
