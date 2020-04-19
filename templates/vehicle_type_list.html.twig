@@ -1,0 +1,4 @@
+{% for type in types %}
+    <a href="{{ path('make_list_by_vehicle_type', {type: type.code}) }}">{{ type.code }} - {{ type.description }}</a>
+    <br /><br />
+{% endfor %}
