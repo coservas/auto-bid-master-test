@@ -10,13 +10,15 @@ use Doctrine\Persistence\ObjectManager;
 
 class MakeFixtures extends Fixture implements DependentFixtureInterface
 {
-    private const PATH_TO_FIXTURES = __DIR__ . '/../../data/fixtures';
+    use FixturesTrait;
+
     private const FILENAME = 'makes.json';
 
     public function load(ObjectManager $manager): void
     {
-        $filepath = sprintf('%s/%s', self::PATH_TO_FIXTURES, self::FILENAME);
-        $data = $this->getDataFromFile($filepath);
+        $data = $this->getDataFromFile(
+            sprintf('%s/%s', $this->getPathToFixtures(), self::FILENAME)
+        );
 
         foreach ($data as $datum) {
             $code = $datum['code'];
@@ -36,11 +38,6 @@ class MakeFixtures extends Fixture implements DependentFixtureInterface
         }
 
         $manager->flush();
-    }
-
-    private function getDataFromFile(string $pathname): array
-    {
-        return json_decode(file_get_contents($pathname), true);
     }
 
     public function getDependencies(): array

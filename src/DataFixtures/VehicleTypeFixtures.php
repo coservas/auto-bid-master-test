@@ -8,13 +8,15 @@ use Doctrine\Persistence\ObjectManager;
 
 class VehicleTypeFixtures extends Fixture
 {
-    private const PATH_TO_FIXTURES = __DIR__ . '/../../data/fixtures';
+    use FixturesTrait;
+
     private const FILENAME = 'vehicle_types.json';
 
     public function load(ObjectManager $manager)
     {
-        $filepath = sprintf('%s/%s', self::PATH_TO_FIXTURES, self::FILENAME);
-        $data = $this->getDataFromFile($filepath);
+        $data = $this->getDataFromFile(
+            sprintf('%s/%s', $this->getPathToFixtures(), self::FILENAME)
+        );
 
         foreach ($data as $datum) {
             $code = $datum['code'];
@@ -28,10 +30,5 @@ class VehicleTypeFixtures extends Fixture
         }
 
         $manager->flush();
-    }
-
-    private function getDataFromFile(string $pathname)
-    {
-        return json_decode(file_get_contents($pathname), true);
     }
 }
