@@ -16,6 +16,9 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.3",
+        "friendsofphp/php-cs-fixer": "^2.16",
+        "phpstan/phpstan": "^0.12.19",
+        "squizlabs/php_codesniffer": "^3.5",
         "symfony/maker-bundle": "^1.15"
     },
     "config": {
@@ -56,7 +59,19 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
-        ]
+        ],
+        "analyse": [
+            "@phpcs",
+            "@phpstan"
+        ],
+        "fix": [
+            "@php-cs-fixer",
+            "@phpcbf"
+        ],
+        "phpcs": "./vendor/bin/phpcs",
+        "phpcbf": "./vendor/bin/phpcbf",
+        "php-cs-fixer": "./vendor/bin/php-cs-fixer fix --show-progress=dots",
+        "phpstan": "./vendor/bin/phpstan analyse --paths-file=./phpstan.dist --ansi --level=max"
     },
     "conflict": {
         "symfony/symfony": "*"
