@@ -39,7 +39,7 @@ class MainController extends AbstractController
             ->getRepository(VehicleType::class)
             ->findOneBy(['code' => $type]);
 
-        /** @var VehicleType[] $types */
+        /** @var Make[] $makes */
         $makes = $this->getDoctrine()
             ->getRepository(Make::class)
             ->findBy(['type' => $vehicleType], ['code' => 'ASC']);
@@ -74,8 +74,8 @@ class MainController extends AbstractController
             ->setMakeCode($makeCode)
             ->setNumberModels(count($models))
             ->setRequestTime(new \DateTime())
-            ->setIp($request->getClientIp())
-            ->setUserAgent($request->headers->get('User-Agent'));
+            ->setIp((string)$request->getClientIp())
+            ->setUserAgent((string)$request->headers->get('User-Agent'));
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($log);

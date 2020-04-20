@@ -15,7 +15,7 @@ class ModelFixtures extends Fixture implements DependentFixtureInterface
 
     private const FILENAME = 'models.json';
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $data = $this->getDataFromFile(
             sprintf('%s/%s', $this->getPathToFixtures(), self::FILENAME)
