@@ -73,7 +73,7 @@ class MainController extends AbstractController
             ->setVehicleTypeCode($type)
             ->setMakeCode($makeCode)
             ->setNumberModels(count($models))
-            ->setRequestTime((new \DateTime())->format('Y-m-d H:i:s'))
+            ->setRequestTime(new \DateTime())
             ->setIp($request->getClientIp())
             ->setUserAgent($request->headers->get('User-Agent'));
 

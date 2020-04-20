@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,32 +14,22 @@ class Make
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $code;
+    private ?string $code;
 
     /**
      * @ORM\Column(type="string", length=65535)
      */
-    private $description;
+    private ?string $description;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\VehicleType", inversedBy="makes")
      */
-    private $type;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Model", mappedBy="make")
-     */
-    private $models;
-
-    public function __construct()
-    {
-        $this->models = new ArrayCollection();
-    }
+    private ?VehicleType $type;
 
     public function getId(): ?int
     {
@@ -80,37 +68,6 @@ class Make
     public function setType(?VehicleType $type): self
     {
         $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Model[]
-     */
-    public function getModels(): Collection
-    {
-        return $this->models;
-    }
-
-    public function addModel(Model $model): self
-    {
-        if (!$this->models->contains($model)) {
-            $this->models[] = $model;
-            $model->setMake($this);
-        }
-
-        return $this;
-    }
-
-    public function removeModel(Model $model): self
-    {
-        if ($this->models->contains($model)) {
-            $this->models->removeElement($model);
-            // set the owning side to null (unless already changed)
-            if ($model->getMake() === $this) {
-                $model->setMake(null);
-            }
-        }
 
         return $this;
     }

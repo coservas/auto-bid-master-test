@@ -14,37 +14,37 @@ class SearchLog
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $vehicleTypeCode;
+    private ?string $vehicleTypeCode;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $makeCode;
+    private ?string $makeCode;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $numberModels;
+    private ?int $numberModels;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private ?\DateTime $requestTime;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $requestTime;
+    private ?string $ip;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $ip;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $userAgent;
+    private ?string $userAgent;
 
     public function getId(): ?int
     {
@@ -63,12 +63,12 @@ class SearchLog
         return $this;
     }
 
-    public function getRequestTime(): ?string
+    public function getRequestTime(): ?\DateTime
     {
         return $this->requestTime;
     }
 
-    public function setRequestTime(string $requestTime): self
+    public function setRequestTime(\DateTime $requestTime): self
     {
         $this->requestTime = $requestTime;
 

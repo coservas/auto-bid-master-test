@@ -14,27 +14,27 @@ class Model
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $code;
+    private ?string $code;
 
     /**
      * @ORM\Column(type="string", length=65535)
      */
-    private $description;
+    private ?string $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\VehicleType", inversedBy="models")
+     * @ORM\ManyToOne(targetEntity="App\Entity\VehicleType")
      */
-    private $type;
+    private ?VehicleType $type;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Make", inversedBy="models")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Make")
      */
-    private $make;
+    private ?Make $make;
 
     public function getId(): ?int
     {
